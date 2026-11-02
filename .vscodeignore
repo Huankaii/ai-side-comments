@@ -1,0 +1,16 @@
+.vscode/**
+src/**
+test/**
+scripts/**
+node_modules/**
+tsconfig.json
+package-lock.json
+*.vsix
+*.zip
+dist/**/*.map
+.gitignore
+.github/**
+docs/**
+examples/**
+CONTRIBUTING.md
+.test-work/**

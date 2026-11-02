@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AI Side Comments progress update",
+  "type": "object",
+  "required": ["id", "phase", "message"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 200, "description": "Unique identifier for this update." },
+    "phase": { "enum": ["planning", "editing", "testing", "done", "error"] },
+    "message": { "type": "string", "minLength": 1, "maxLength": 4000 },
+    "file": { "type": "string", "description": "Optional workspace-relative path using forward slashes." },
+    "line": { "type": "integer", "minimum": 1, "maximum": 10000000 }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.vsix
+*.zip
+.DS_Store
+.ai-side-comments/
+.test-work/
+*.log
+.env*

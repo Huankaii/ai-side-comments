@@ -1,0 +1,54 @@
+{
+  "name": "ai-side-comments",
+  "displayName": "AI Side Comments",
+  "description": "Follow AI coding progress and understand changed code beside your editor.",
+  "version": "0.1.0",
+  "publisher": "local-tools",
+  "author": { "name": "Huankaii", "url": "https://github.com/Huankaii" },
+  "repository": { "type": "git", "url": "https://github.com/Huankaii/ai-side-comments.git" },
+  "homepage": "https://github.com/Huankaii/ai-side-comments#readme",
+  "bugs": { "url": "https://github.com/Huankaii/ai-side-comments/issues" },
+  "license": "MIT",
+  "engines": { "vscode": "^1.95.0" },
+  "categories": ["Other", "Education"],
+  "keywords": ["ai", "comments", "explain", "progress"],
+  "main": "./dist/extension.js",
+  "activationEvents": ["onStartupFinished"],
+  "capabilities": { "untrustedWorkspaces": { "supported": false }, "virtualWorkspaces": { "supported": false } },
+  "scripts": {
+    "compile": "tsc -p .",
+    "watch": "tsc -w -p .",
+    "test": "npm run compile && node --test test/*.test.cjs",
+    "test:host": "node scripts/smoke-test.cjs",
+    "package": "vsce package --allow-missing-repository",
+    "vscode:prepublish": "npm run compile"
+  },
+  "devDependencies": { "@types/node": "^22.0.0", "@types/vscode": "1.95.0", "@vscode/vsce": "^3.0.0", "typescript": "^5.7.0" },
+  "contributes": {
+    "commands": [
+      { "command": "aiSideComments.start", "title": "Start Watching", "category": "AI Side Comments", "icon": "$(play)" },
+      { "command": "aiSideComments.pause", "title": "Pause Watching", "category": "AI Side Comments", "icon": "$(debug-pause)" },
+      { "command": "aiSideComments.show", "title": "Show Side Panel", "category": "AI Side Comments", "icon": "$(comment-discussion)" },
+      { "command": "aiSideComments.enableExplanations", "title": "Enable Automatic Code Explanations", "category": "AI Side Comments" },
+      { "command": "aiSideComments.disableExplanations", "title": "Disable Automatic Code Explanations", "category": "AI Side Comments" },
+      { "command": "aiSideComments.explain", "title": "Explain Selected Code or File", "category": "AI Side Comments" },
+      { "command": "aiSideComments.clear", "title": "Clear Comments and Activity", "category": "AI Side Comments" },
+      { "command": "aiSideComments.reportProgress", "title": "Report Agent Progress", "category": "AI Side Comments" }
+    ],
+    "menus": {
+      "editor/context": [{ "command": "aiSideComments.explain", "when": "resourceScheme == file", "group": "navigation@20" }],
+      "commandPalette": [{ "command": "aiSideComments.reportProgress", "when": "false" }]
+    },
+    "configuration": {
+      "title": "AI Side Comments",
+      "properties": {
+        "aiSideComments.showInline": { "type": "boolean", "default": true, "description": "Show short comments at the end of changed lines." },
+        "aiSideComments.showGutterComments": { "type": "boolean", "default": true, "description": "Add expandable native comments containing the full explanation." },
+        "aiSideComments.explanationDelayMs": { "type": "number", "default": 2500, "minimum": 1000, "maximum": 30000, "description": "Wait for edits to settle before explaining them." },
+        "aiSideComments.maxFileBytes": { "type": "number", "default": 200000, "minimum": 1000, "maximum": 1000000, "description": "Skip larger files when generating explanations." },
+        "aiSideComments.excludedPaths": { "type": "array", "items": { "type": "string" }, "default": ["**/node_modules/**", "**/dist/**", "**/build/**", "**/vendor/**", "**/coverage/**", "**/package-lock.json", "**/yarn.lock", "**/pnpm-lock.yaml"], "description": "Additional paths to ignore. Supports *, **, and ?. Git metadata, the progress bridge, and common credential filenames are always excluded." }
+      }
+    },
+    "jsonValidation": [{ "fileMatch": "**/.ai-side-comments/progress.json", "url": "./progress.schema.json" }]
+  }
+}
