@@ -8,7 +8,7 @@ npm test
 npm run package
 ```
 
-Press F5 in VS Code to open a development host. To run native integration checks against an installed VS Code binary, use `npm run test:host`; set `VSCODE_EXECUTABLE` if `code` is not on PATH. This creates temporary fixtures under `.test-work/` and uses an isolated profile.
+Press F5 in VS Code to open a development host. To run native integration checks against an installed VS Code binary, use `npm run test:host`; set `VSCODE_EXECUTABLE` if `code` is not on PATH. This creates watched fixtures under `.test-work/` and an isolated profile in the OS temporary directory. Both are retained for diagnostics.
 
 Keep changes focused. Add tests for changes to scheduling, cancellation, model requests, progress validation, or file filtering. For UI changes, check both light and dark themes, keyboard navigation, and long explanations. Model text and progress messages must remain untrusted content, rendered as text.
 

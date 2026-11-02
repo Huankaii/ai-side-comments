@@ -35,6 +35,7 @@ exports.run = async function () {
     if (resultPath) await fs.writeFile(resultPath, JSON.stringify(result, null, 2));
   } catch (error) {
     if (resultPath) await fs.writeFile(resultPath, JSON.stringify({ success: false, error: error.stack }, null, 2));
+    setTimeout(() => { void vscode.commands.executeCommand('workbench.action.closeWindow'); }, 100);
     throw error;
   }
 };
